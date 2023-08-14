@@ -1,13 +1,14 @@
 /*
 Biblioteka do obsługi wyświetlacza 7 segmentowego
-Wersja 0.1 - przed testami
+Wersja 1 
+Zmiana char na int - Arduino IDE nie wyświetla w terminalu char jako liczby
 */
 
 #include "my_sev_seg.h"
+#include <avr/io.h>
+#include <util/delay.h>
 
-void digit_display(char* digit){
-    if(*digit < 0 || *digit > 9){ Serial.println("digit_display error - wrong size"); }
-
+void digit_display(int* digit){
     if(*digit == 0){ PORTD = 0b0001000; }
     else if(*digit == 1){ PORTD = 0b1011110; }
     else if(*digit == 2){ PORTD = 0b0010001; }
@@ -20,7 +21,7 @@ void digit_display(char* digit){
     else if(*digit == 9){ PORTD = 0b0000100; }
 }
 
-void number_extract(char number, char* digit1, char* digit2){
+void number_extract(int number, int* digit1, int* digit2){
     //Zapis w zmiennej wskazywanej przez wskaźnik
     //Część dziesiętna
     *digit1 = number / 10;
@@ -28,13 +29,14 @@ void number_extract(char number, char* digit1, char* digit2){
     *digit2 = number % 10;
 }
 
-void number_display(char *digit1, char* digit2){
-    PORTB = ~(1 << c_anode1) || ~(1 << c_anode2);
-    digit_display(*digit1);
-    PORTB = (1 << c_anode1) || ~(1 << c_anode2);
+void number_display(int *digit1, int* digit2){
+    //Jedynka wyłącza segment
+    PORTB = (1 << c_anode1) | (1 << c_anode2);
+    digit_display(digit1);
+    PORTB = ~(1 << c_anode1) | (1 << c_anode2);
     _delay_ms(10);
-    PORTB = ~(1 << c_anode1) || ~(1 << c_anode2);
-    digit_display(*digit2);
-    PORTB = ~(1 << c_anode1) || (1 << c_anode2);
+    PORTB = (1 << c_anode1) | (1 << c_anode2);
+    digit_display(digit2);
+    PORTB = (1 << c_anode1) | ~(1 << c_anode2);
     _delay_ms(10);
 }
