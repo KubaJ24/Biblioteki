@@ -1,7 +1,8 @@
 /*
+Wersja 1.1
+18.09.2023
 Biblioteka do obsługi wyświetlacza 7 segmentowego
-Wersja 1
-Zmiana char na int - Arduino IDE nie wyświetla w terminalu char jako liczby
+Zmiana char na uint8_t - Arduino IDE nie wyświetla w terminalu char jako liczby
 */
 
 //Piny anod cyfry 1 i 2 

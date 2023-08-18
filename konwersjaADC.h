@@ -2,10 +2,14 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+/*
+Bit ADSC jest jedynką przez cały czas trwania konwersji
+*/
+
 void adc_config();
 /*
 Konfiguracja ADC
-Źródło odniesienia AREF, kanał A0, presc. 128
+Źródło odniesienia Reserved, kanał A0, presc. 128
 */
 
 void adc_start();

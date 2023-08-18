@@ -4,7 +4,7 @@
 #include "konwersjaADC.h"
 
 void adc_config(){
-    ADCSRA = 0b10001111;
+    ADCSRA = 0b10000111;
     ADMUX = 0b10000000;
 }
 
