@@ -8,7 +8,7 @@ Zmiana char na int - Arduino IDE nie wyświetla w terminalu char jako liczby
 #include <avr/io.h>
 #include <util/delay.h>
 
-void digit_display(int* digit){
+void digit_display(uint8_t* digit){
     if(*digit == 0){ PORTD = 0b0001000; }
     else if(*digit == 1){ PORTD = 0b1011110; }
     else if(*digit == 2){ PORTD = 0b0010001; }
@@ -21,7 +21,7 @@ void digit_display(int* digit){
     else if(*digit == 9){ PORTD = 0b0000100; }
 }
 
-void number_extract(int number, int* digit1, int* digit2){
+void number_extract(uint8_t number, uint8_t* digit1, uint8_t* digit2){
     //Zapis w zmiennej wskazywanej przez wskaźnik
     //Część dziesiętna
     *digit1 = number / 10;
@@ -29,7 +29,7 @@ void number_extract(int number, int* digit1, int* digit2){
     *digit2 = number % 10;
 }
 
-void number_display(int *digit1, int* digit2){
+void number_display(uint8_t *digit1, uint8_t* digit2){
     //Jedynka wyłącza segment
     PORTB = (1 << c_anode1) | (1 << c_anode2);
     digit_display(digit1);
